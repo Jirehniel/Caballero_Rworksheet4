@@ -103,3 +103,147 @@ summary_factor
 #1         5         1         3 
 #both Vectors are useful but a factor can be more important when the order of levels matters, while a character is sufficient for basic frequency analysis
 
+#4
+directions <- c("East", "West", "North")
+frequency <- c(1, 4, 3)
+
+new_order_data <- factor(directions, levels = c("East", "West", "North"))
+
+print(new_order_data)
+#East  West  North
+#Levels: East West North
+
+#5
+install.packages("readr")
+library(readr)
+#A
+import_march <- read.csv(file="import_march.csv")
+import_march
+
+#B
+# A tibble: 6 × 4
+#Students `Strategy 1` Strategy2 `Strategy 3`
+#<chr>           <dbl>     <dbl>        <dbl>
+#  1 Male                8        10            8
+#2 NA                  4         8            6
+#3 NA                  0         6            4
+#4 Female             14         4           15
+#5 NA                 10         2           12
+#6 NA                  6         0            9
+
+
+#6
+
+num <- readline(prompt = "choose a number from 1 to 50 :")
+
+if (num < 1 || num > 50) {
+  print("The number selected is beyond the range of 1 to 50")
+} else if (num == 20) {
+  print("TRUE")
+} else {
+  print(num)
+}
+
+#first run the readline
+#> num <- readline(prompt = "choose a number from 1 to 50 :")
+
+#then input the number you selected in the console pane
+#choose a number from 1 to 50 :100
+
+#then run the if else function
+#> if (num < 1 || num > 50) {
+#  +   print("The number selected is beyond the range of 1 to 50")
+#  + } else if (num == 20) {
+#    +   print("TRUE")
+#    + } else {
+#      +   print(num)
+#      + }
+#[1] "100"
+#then it will show the output
+
+#the output if the number you selected is 20
+#> num <- readline(prompt = "choose a number from 1 to 50 :")
+#choose a number from 1 to 50 :20
+#> if (num < 1 || num > 50) {
+#  +   print("The number selected is beyond the range of 1 to 50")
+#  + } else if (num == 20) {
+#    +   print("TRUE")
+#    + } else {
+#      +   print(num)
+#      + }
+#[1] "TRUE"
+#>
+
+
+#7.
+#a.
+calc_min_bills<-function(){
+  price<-as.integer(readline(prompt="Price of snack(a random number divisible by 50):"))
+  
+  if (is.na(price)|| price %% 50 !=0){
+    cat("Invalid.\n")
+    return()
+  }
+  num_bills<-0
+  bill_denominations<-c(1000,500,200,100,50)
+  
+  for(bill in bill_denominations){
+    num_bills<-num_bills + (price %/% bill)
+    price<-price %% bill
+  }
+  
+  cat("Minimum number of bills needed:", num_bills,"\n")
+}
+calc_min_bills()
+
+#8.
+#a.
+Name<-c("Annie","Thea","Steve","Hanna")
+Grade1<-c(85,65,75,95)
+Grade2<-c(65,75,55,75)
+Grade3<-c(85,90,80,100)
+Grade4<-c(100,90,85,90)
+cardDf<-data.frame(Name, Grade1, Grade2, Grade3, Grade4)
+cardDf
+
+#b.
+student_above_90<-FALSE
+for(j in 1:length(Name)){
+  average_score<-c((Grade1)[j]+(Grade2)[j]+(Grade3)[j]+(Grade4)[j])/4
+  if (average_score>90){
+    cat(paste(Name[j], "'s average grade this semester is", round(average_score,2),"\n"))
+    student_above_90<-TRUE
+  }
+}
+if(!student_above_90){
+  print("No student have an average of over 90 in the math during the semester")
+}
+
+#c.
+for (test_num in 1:4){
+  total_score<-Grade1 + Grade2 + Grade3 + Grade4
+  average_score<-total_score/4
+  if (average_score[test_num]<80){
+    cat("The", test_num, "test was difficult.\n")
+  }
+}
+
+#d.
+for (j in 1:length(Name)){
+  highest_grade<-Grade1[j]
+  
+  if (Grade2[j]>highest_grade){
+    highest_grade<-Grade2[j]
+  }
+  if (Grade3[j]>highest_grade){
+    highest_grade<-Grade3[j]
+  }
+  if (Grade4[j]>highest_grade){
+    highest_grade<-Grade4[j]
+  }
+  
+  if (highest_grade>90){
+    cat(paste(Name[j], "'s highest grade this semester is", highest_grade, ".\n"))
+  }
+}
+

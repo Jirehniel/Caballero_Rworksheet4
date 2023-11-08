@@ -2,7 +2,9 @@
 title: "Caballero_Rworksheet#4a"
 author: "Jireh Niel Caballero"
 date: "2023-10-25"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
