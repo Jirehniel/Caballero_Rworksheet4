@@ -1,15 +1,3 @@
----
-title: "Caballero_Rworksheet#4a"
-author: "Jireh Niel Caballero"
-date: "2023-10-25"
-output: html_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-```
 #1.
 shoe_size <- c(6.5,9.0,8.5,8.5,10.5,7.0,9.5,9.0,13.0,7.5,10.5,8.5,12.0,10.5,13.0,11.5,8.5,5.0,10.0,6.5,7.5,8.5,10.5,8.5,10.5,11.0,9.0,13.0)
 Height <- c(66.0,68.0,64.5,65.0,70.0,64.0,70.0,71.0,72.0,64.0,74.5,67.0,71.0,71.0,77.0,72.0,59.0,62.0,72.0,66.0,64.0,67.0,73.0,69.0,72.0,70.0,69.0,70.0)
@@ -97,7 +85,7 @@ mean_height_F
 months <- c("March","April","January","November","January",
             "September","October","September","November","August",
             "January","November","November","February","May","August",
-            "July","December","August","August","September","November","February","April")
+      "July","December","August","August","September","November","February","April")
 factor_months_vector <- factor(months)     
 factor_months_vector
 
@@ -114,76 +102,4 @@ summary_factor
 #May  November   October September 
 #1         5         1         3 
 #both Vectors are useful but a factor can be more important when the order of levels matters, while a character is sufficient for basic frequency analysis
-#7.
-#a.
-calc_min_bills<-function(){
-  price<-as.integer(readline(prompt="Price of snack(a random number divisible by 50):"))
-  
-  if (is.na(price)|| price %% 50 !=0){
-    cat("Invalid.\n")
-    return()
-  }
-  num_bills<-0
-  bill_denominations<-c(1000,500,200,100,50)
-  
-  for(bill in bill_denominations){
-    num_bills<-num_bills + (price %/% bill)
-    price<-price %% bill
-  }
-  
-  cat("Minimum number of bills needed:", num_bills,"\n")
-}
-calc_min_bills()
 
-#8.
-#a.
-Name<-c("Annie","Thea","Steve","Hanna")
-Grade1<-c(85,65,75,95)
-Grade2<-c(65,75,55,75)
-Grade3<-c(85,90,80,100)
-Grade4<-c(100,90,85,90)
-cardDf<-data.frame(Name, Grade1, Grade2, Grade3, Grade4)
-cardDf
-
-#b.
-student_above_90<-FALSE
-for(j in 1:length(Name)){
-  average_score<-c((Grade1)[j]+(Grade2)[j]+(Grade3)[j]+(Grade4)[j])/4
-  if (average_score>90){
-    cat(paste(Name[j], "'s average grade this semester is", round(average_score,2),"\n"))
-    student_above_90<-TRUE
-  }
-}
-if(!student_above_90){
-  print("No student have an average of over 90 in the math during the semester")
-}
-
-#c.
-for (test_num in 1:4){
-  total_score<-Grade1 + Grade2 + Grade3 + Grade4
-  average_score<-total_score/4
-  if (average_score[test_num]<80){
-    cat("The", test_num, "test was difficult.\n")
-  }
-}
-
-#d.
-for (j in 1:length(Name)){
-  highest_grade<-Grade1[j]
-  
-  if (Grade2[j]>highest_grade){
-    highest_grade<-Grade2[j]
-  }
-  if (Grade3[j]>highest_grade){
-    highest_grade<-Grade3[j]
-  }
-  if (Grade4[j]>highest_grade){
-    highest_grade<-Grade4[j]
-  }
-  
-  if (highest_grade>90){
-    cat(paste(Name[j], "'s highest grade this semester is", highest_grade, ".\n"))
-  }
-}
-
-```
