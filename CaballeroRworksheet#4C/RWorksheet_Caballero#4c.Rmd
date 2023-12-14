@@ -1,0 +1,275 @@
+---
+title: "Rworksheet_Caballero#4c"
+author: "Jireh Niel Caballero"
+date: "2023-12-14"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#1. Use the dataset mpg
+#A data frame with 234 rows and 11 variables:
+#’ \describe{
+#’ \item{manufacturer}{manufacturer name}
+#’ \item{model}{model name}
+#’ \item{displ}{engine displacement, in litres}
+#’ \item{year}{year of manufacture}
+#’ \item{cyl}{number of cylinders}
+#’ \item{trans}{type of transmission}
+#’ \item{drv}{the type of drive train, where f = front-wheel drive, r = rear wheel drive, 4 = 4wd}
+#’ \item{cty}{city miles per gallon}
+#’ \item{hwy}{highway miles per gallon}
+#’ \item{fl}{fuel type}
+#’ \item{class}{"type" of car}
+#’ }
+"mpg"
+
+```
+
+```{r}
+#A.
+#1st download the mpg.csv file
+#2nd upload the mpg file in the posit cloud or r studio by clicking the upload in the file/plot tab
+#3rd click the mpg.csv file in the files/plot tab and click import data set
+
+library(openxlsx)
+getwd()
+setwd("/cloud/project/CaballeroRworksheet#4C")
+library(readr)
+mpg <- read_csv("mpg.csv",show_col_types = FALSE)
+spec(mpg)
+head(mpg)
+#View(mpg)
+```
+
+```{r}
+#B.
+str(mpg)
+#spc_tbl_ [234 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ #$ ...1        : num [1:234] 1 2 3 4 5 6 7 8 9 10 ...
+ #$ manufacturer: chr [1:234] "audi" "audi" "audi" "audi" ...
+ #$ model       : chr [1:234] "a4" "a4" "a4" "a4" ...
+ #$ displ       : num [1:234] 1.8 1.8 2 2 2.8 2.8 3.1 1.8 1.8 2 ...
+ #$ year        : num [1:234] 1999 1999 2008 2008 1999 ...
+ #$ cyl         : num [1:234] 4 4 4 4 6 6 6 4 4 4 ...
+ #$ trans       : chr [1:234] "auto(l5)" "manual(m5)" "manual(m6)" "auto(av)" ...
+ #$ drv         : chr [1:234] "f" "f" "f" "f" ...
+ #$ cty         : num [1:234] 18 21 20 21 16 18 18 18 16 20 ...
+ #$ hwy         : num [1:234] 29 29 31 30 26 26 27 26 25 28 ...
+ #$ fl          : chr [1:234] "p" "p" "p" "p" ...
+ #$ class       : chr [1:234] "compact" "compact" "compact" "compact" ...
+
+```
+
+
+```{r}
+#C.
+#the continuous variables are displ, year, cyl, cty, hwy
+
+```
+
+```{r}
+#2.
+
+manufacturers <- table(mpg$manufacturer)
+manufacturers
+#dodge
+
+library(dplyr)
+
+```
+```{r}
+models <- mpg%>%count(mpg$model)
+models 
+
+#caravan 2wd
+```
+```{r}
+#A.
+unique_mdls <- mpg %>%group_by(manufacturer)%>%distinct(model)
+unique_mdls
+
+```
+```{r}
+#B.
+library(ggplot2)
+
+qplot(manufacturer, data = mpg,
+geom = "bar", fill = manufacturer)
+
+```
+
+
+
+```{r}
+#2.part 2
+
+#A
+ggplot(mpg, aes(model, manufacturer)) + geom_point()
+```
+```{r}
+#B.
+#rates a scatter plot illustrating the relationship between car models and their respective manufacturers. #In this plot, the x-axis represents the car models, while the y-axis represents the manufacturers. Each #data point on the plot signifies a specific car model and its associated manufacturer.
+
+#The current plot may lack usefulness due to potential overlap of data points, making it challenging to #discern individual models. To enhance its informativeness
+#we can add Jitter the Points along the x-axis to alleviate overlap and improve visual clarity.
+#aggregate the data to present summaries. 
+```
+
+
+```{r}
+
+top_20 <- head(mpg, 20)
+ggplot(top_20, aes(x = model, y = year),
+       labs(title = "Scatter Plot of Model and Year (Top 20 Observations)",
+       x = "Car Model",
+       y = "Year"))
+```
+
+```{r}
+#4.
+library(dplyr)
+models_group <- mpg %>%
+group_by(model)%>%
+summarise(number_of_cars = n())
+models_group
+```
+
+```{r}
+#A
+ggplot(top_20, aes(x = model)) +
+geom_bar(fill = "red", alpha = 0.5) +
+labs(title = "Top 20 Observations",
+x = "Car Model",
+y = "Numbers of Car") +
+theme_minimal()
+
+```
+
+```{r}
+#B
+ggplot(top_20, aes(x = model)) +
+geom_bar(fill = "yellow", alpha = 0.7) + 
+labs(title = "Top 20 Observations",
+x = "Car Model",
+y = "Numbers of Car") +
+theme_minimal() +
+coord_flip()
+
+```
+
+
+```{r}
+#5.
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+geom_point() +
+labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+x = "Number of cyl",
+y = "Number of displ") +
+scale_color_continuous(name = "Engine Displacement") +
+theme_minimal()
+```
+```{r}
+#This scatter plot illustrates the dispersion of car models among various manufacturers. Each data point #signifies a distinct pairing of a car model with its corresponding manufacturer. The horizontal axis #denotes the car model, while the vertical axis indicates the manufacturer.
+
+```
+
+
+```{r}
+#6
+#A
+traffic_data <- read.csv("traffic.csv")
+#View(traffic_data)
+num_traffic_obv <-nrow(traffic_data)
+num_traffic_obv
+
+```
+
+```{r}
+str(traffic_data)
+#The variables of traffic dataset is DateTime, Junction, Vehicles, and ID.
+
+```
+```{r}
+#B.
+junctions_subset <- traffic_data %>%
+  select(DateTime, Junction, Vehicles) 
+```
+```{r}
+library(tidyverse)
+ggplot(junctions_subset, aes(x = DateTime, y = Vehicles, color = as.factor(Junction), group = Junction)) +
+  geom_line() +
+  labs(title = "Traffic Data by Junctions",
+       x = "DateTime",
+       y = "Number of Vehicles") +
+  theme_minimal()
+```
+```{r}
+#7.
+library(readxl)
+alexa_file <- read_excel("/cloud/project/CaballeroRworksheet4b/alexa_file.xlsx")
+#View(alexa_file)
+
+
+#A.
+nrow(alexa_file)
+
+```
+```{r}
+ncol(alexa_file)
+
+```
+```{r}
+#B.
+alexa_data <- alexa_file%>%
+group_by(variation) %>%
+summarise(Frequency = n())
+#View(alexa_data)
+```
+
+
+```{r}
+#C
+library(dplyr)
+ggplot(alexa_data, aes(x = variation, y = Frequency )) +
+geom_bar(stat = "identity") +
+labs(
+title = "Variations of Alexa Devices",
+x = "Variation",
+y = "Frequency")
+#Each bar represents a variation, and its height indicates how frequently it appears in the data. 
+```
+```{r}
+#D.
+
+summary_reviews <- alexa_file %>%
+group_by(date) %>%
+summarize(NumVerifiedReviews = n())
+
+ggplot(summary_reviews, aes(x = date, y = NumVerifiedReviews )) +
+geom_line(color = "blue") +
+labs(
+title = "Verified Reviews Over Time",
+x = "Date",
+y = "Number of Verified Reviews"
+) +
+theme_minimal()
+
+```
+
+```{r}
+#E.
+ggplot(alexa_file, aes(x = rating, y = variation)) +
+geom_point() +
+labs(
+title = "Relationship Between Variations and Ratings",
+x = "Variation",
+y = "Rating"
+) +
+theme_minimal()
+#the highest variations rating is Walnut Finish and Oak Finish
+```
+
