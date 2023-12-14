@@ -2,7 +2,9 @@
 title: "Rworksheet#4b_Caballero"
 author: "Jireh Niel Caballero"
 date: "2023-11-22"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -92,50 +94,56 @@ repeat{
 #4
 
 #a
+library(readr)
+library(openxlsx)
 
-HouseholdData <-read.table("HouseholdData.csv", header = TRUE, sep = ",",as.is = TRUE)
-View(HouseholdData)  
+HouseholdData <- read.table("/cloud/project/CaballeroRworksheet#4/FinalHouseholdData.csv", header = TRUE, sep = ",", as.is = TRUE)
+#View(HouseholdData)
+#head(HouseholdData,6)
+#  X shoe_size Height  Gender
+#1 1       6.5   66.0   F
+#2 2       9.0   68.0   F
+#3 3       8.5   64.5   F
+#4 4       8.5   65.0   F
+#5 5      10.5   70.0   M
+#6 6       7.0   64.0   F
+```
 
-head(HouseholdData,6)
-
-#  X shoe_size Height
-#1 1       6.5   66.0
-#2 2       9.0   68.0
-#3 3       8.5   64.5
-#4 4       8.5   65.0
-#5 5      10.5   70.0
-#6 6       7.0   64.0
 
 #b
 
-maleSubset<- subset(HouseholdData, Gender == 'M')
-femaleSubset<- subset(HouseholdData,Gender == 'F')
+```{r}
+maleSubset <- subset(HouseholdData, HouseholdData$Gender == 'M')
+femaleSubset <- subset(HouseholdData, HouseholdData$Gender == 'F')
+
 
 male_count <- nrow(maleSubset)
-male_count
-
 #[1] 14
-
 female_count <- nrow(femaleSubset)
-female_count
-
 #[1] 14
 
-#c
+#C
+```
 
-count<- c(male_count,female_count)
-gender <- c("Male","Female")
 
+
+```{r}
+count <- c(male_count, female_count)
+gender <- c("Male", "Female")
 
 barplot(count,
         names.arg = gender,
         main = "The number of Males and Females in Household Data",
-        xlab = "Gender",
+        xlab = "gender",
         ylab = "Count",
-        col = c("blue","pink"))
+        col = c("blue", "pink"),
+        border = "black")
+
+# Add legend
 legend("topright",
        legend = gender,
-       fill = c("blue","pink"))
+       fill = c("blue", "pink"))
+
 ```
 
 ```{r}
@@ -198,12 +206,121 @@ versicolor_lastsix
 virginica_lastsix
 ```
 
+#E
+```{r}
+plot(iris$Sepal.Length, iris$Sepal.Width,
+pch = as.integer(iris$Species),
+col = as.integer(iris$Species) + 1,
+main = "Iris Dataset",
+sub = "Sepal width and length",
+xlab = "Sepal Length",
+ylab = "Sepal Width",
+cex = 1.5,
+lwd = 1.5)
+
+```
+
+```{r}
+as.factor(iris$Species)
+```
+
+##as.factor(iris$Species) is a way of telling R that the "Species" variable should be treated as a categorical variable. 
 
 
 
+##Basic Cleaning and Transformation of Objects
+
+#7
+
+#A
+```{r}
+library(readr)
+library(readxl)
+alexa_file <- read_excel("/cloud/project/CaballeroRworksheet4b/alexa_file.xlsx")
+#View(alexa_file)
+
+```
+
+```{r}
+alexaVaration <- gsub("Black Plus", "Black Plus", alexa_file$variation)
+alexa_file$variation <- gsub("Black Show", "Black Show", alexa_file$variation)
+alexa_file$variation <- gsub("Black Spot", "Black Spot", alexa_file$variation)
+alexa_file$variation <- gsub("Black Dot", "Black Dot", alexa_file$variation)
+alexa_file$variation <- gsub("White Dot", "White Dot", alexa_file$variation)
+alexa_file$variation <- gsub("White Plus", "White Plus", alexa_file$variation)
+alexa_file$variation <- gsub("White Show", "White Show", alexa_file$variation)
+alexa_file$variation <- gsub("White Spot", "White Spot", alexa_file$variation)
 
 
 
+```
+
+#B
+```{r}
+library(dplyr)
+save(alexa_file, file = "variations.RData")
+load("variations.RData")
+alexaVaration <- alexa_file%>%count(alexa_file$variation)
+alexaVaration
+```
+#alexa_file$variation
+#<chr>
+#n
+#<int>
+#Black	261			
+#Black Dot	516			
+#Black Plus	270			
+#Black Show	265			
+#Black Spot	241			
+#Charcoal Fabric	430			
+#Configuration: Fire TV Stick	350			
+#Heather Gray Fabric	157			
+#Oak Finish	14			
+#Sandstone Fabric	90	
+#Walnut Finish	9			
+#White	91			
+#White Dot	184			
+#White Plus	78			
+#White Show	85			
+#White Spot	109	
+
+#C
+```{r}
+barplot(
+height = alexaVaration$n,
+names.arg = alexaVaration$`alexa_file$variation`,
+col = "pink",
+main = "Alexa Varations",
+las = 2,
+cex.names = 0.58
+)
+
+```
+#D
+
+```{r}
+par(mfrow = c(1, 2))
+black_variants <- alexaVaration[1:5,]
+white_variants <- alexaVaration[12:16,]
+barplot(
+height = black_variants$n,
+names.arg = black_variants$`alexa_file$variation`,
+main = "Black Variants",
+col = rainbow(8),
+xlab = 'Total Numbers',
+ylab = 'Frequency',
+cex.names = 0.35,
+)
+barplot(
+height = white_variants$n,
+names.arg = white_variants$`alexa_file$variation`,
+main = "White Variants",
+col = rainbow(8),
+xlab = 'Total Numbers',
+ylab = 'Frequency',
+cex.names = 0.35,
+)
+```
 
 
 
