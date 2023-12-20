@@ -1,17 +1,17 @@
 ---
-title: "Caballero_Rworksheet#4a"
+title: "Rworksheet_Caballero#4a"
 author: "Jireh Niel Caballero"
 date: "2023-10-25"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```
+```{r}
 #1.
 shoe_size <- c(6.5,9.0,8.5,8.5,10.5,7.0,9.5,9.0,13.0,7.5,10.5,8.5,12.0,10.5,13.0,11.5,8.5,5.0,10.0,6.5,7.5,8.5,10.5,8.5,10.5,11.0,9.0,13.0)
 Height <- c(66.0,68.0,64.5,65.0,70.0,64.0,70.0,71.0,72.0,64.0,74.5,67.0,71.0,71.0,77.0,72.0,59.0,62.0,72.0,66.0,64.0,67.0,73.0,69.0,72.0,70.0,69.0,70.0)
@@ -93,7 +93,9 @@ mean_height_F
 
 #D 
 #Yes there is a relationship between shoe sizes and height, the taller the person is the bigger its shoe size.
+```
 
+```{r}
 
 #2
 months <- c("March","April","January","November","January",
@@ -102,7 +104,9 @@ months <- c("March","April","January","November","January",
             "July","December","August","August","September","November","February","April")
 factor_months_vector <- factor(months)     
 factor_months_vector
+```
 
+```{r}
 #3
 summary_month <- summary(months)
 summary_month
@@ -116,6 +120,92 @@ summary_factor
 #May  November   October September 
 #1         5         1         3 
 #both Vectors are useful but a factor can be more important when the order of levels matters, while a character is sufficient for basic frequency analysis
+```
+
+```{r}
+#4
+directions <- c("East", "West", "North")
+frequency <- c(1, 4, 3)
+
+new_order_data <- factor(directions, levels = c("East", "West", "North"))
+
+print(new_order_data)
+#East  West  North
+#Levels: East West North
+
+```
+
+
+```{r}
+#5
+install.packages("readr")
+library(readr)
+#A
+import_march <- read.csv(file="import_march.csv")
+import_march
+
+#B
+# A tibble: 6 × 4
+#Students `Strategy 1` Strategy2 `Strategy 3`
+#<chr>           <dbl>     <dbl>        <dbl>
+#  1 Male                8        10            8
+#2 NA                  4         8            6
+#3 NA                  0         6            4
+#4 Female             14         4           15
+#5 NA                 10         2           12
+#6 NA                  6         0            9
+
+
+```
+
+```{r}
+#6
+
+num <- readline(prompt = "choose a number from 1 to 50 :")
+
+if (num < 1 || num > 50) {
+  print("The number selected is beyond the range of 1 to 50")
+} else if (num == 20) {
+  print("TRUE")
+} else {
+  print(num)
+}
+
+#first run the readline
+#> num <- readline(prompt = "choose a number from 1 to 50 :")
+
+#then input the number you selected in the console pane
+#choose a number from 1 to 50 :100
+
+#then run the if else function
+#> if (num < 1 || num > 50) {
+#  +   print("The number selected is beyond the range of 1 to 50")
+#  + } else if (num == 20) {
+#    +   print("TRUE")
+#    + } else {
+#      +   print(num)
+#      + }
+#[1] "100"
+#then it will show the output
+
+#the output if the number you selected is 20
+#> num <- readline(prompt = "choose a number from 1 to 50 :")
+#choose a number from 1 to 50 :20
+#> if (num < 1 || num > 50) {
+#  +   print("The number selected is beyond the range of 1 to 50")
+#  + } else if (num == 20) {
+#    +   print("TRUE")
+#    + } else {
+#      +   print(num)
+#      + }
+#[1] "TRUE"
+#>
+
+```
+
+
+
+```{r}
 #7.
 #a.
 calc_min_bills<-function(){
@@ -136,7 +226,9 @@ calc_min_bills<-function(){
   cat("Minimum number of bills needed:", num_bills,"\n")
 }
 calc_min_bills()
+```
 
+```{r}
 #8.
 #a.
 Name<-c("Annie","Thea","Steve","Hanna")
